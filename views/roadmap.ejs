@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Roadmap</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body class="dark">
+
+<header class="nav">
+  <div class="logo">SWBS</div>
+</header>
+
+<section class="result">
+  <div class="result-card">
+    <span class="pill">Personal Roadmap</span>
+
+    <h2>Your <span class="gold">Actionable Roadmap</span></h2>
+
+    <div class="roadmap-section">
+      <h3 class="gold">📚 Academic Plan</h3>
+      <ul>
+        <% academicPlan.forEach(item => { %>
+          <li><%= item %></li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="roadmap-section">
+      <h3 class="gold">❤️ Health & Balance</h3>
+      <ul>
+        <% healthPlan.forEach(item => { %>
+          <li><%= item %></li>
+        <% }) %>
+      </ul>
+    </div>
+
+    <div class="roadmap-section">
+      <h3 class="gold">🗓 Weekly Rule</h3>
+      <p><%= weeklyRule %></p>
+    </div>
+
+    <a href="/" class="btn-gold full-btn">
+      Restart Analysis
+    </a>
+  </div>
+</section>
+
+<footer>© 2026 Student Workload & Burnout Analysis System</footer>
+</body>
+</html>

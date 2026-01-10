@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Time Management</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body class="dark">
+
+<header class="nav">
+  <div class="logo">SWBS</div>
+</header>
+
+<section class="assessment">
+  <div class="assessment-card">
+    <span class="pill">Section 2</span>
+
+    <h2>How do you usually manage your time?</h2>
+    <p class="subtitle">Select all that apply to you.</p>
+
+    <form method="POST" action="/time">
+
+      <div class="checkbox-list">
+        <label><input type="checkbox" name="habits" value="1"> I start tasks late</label>
+        <label><input type="checkbox" name="habits" value="1"> I don’t plan my day</label>
+        <label><input type="checkbox" name="habits" value="1"> Tasks spill into late night</label>
+        <label><input type="checkbox" name="habits" value="1"> I underestimate time needed</label>
+        <label><input type="checkbox" name="habits" value="1"> I procrastinate important work</label>
+      </div>
+
+      <button type="submit" class="btn-gold full-btn">
+        Continue →
+      </button>
+    </form>
+  </div>
+</section>
+
+<footer>© 2026 Student Workload & Burnout Analysis System</footer>
+</body>
+</html>

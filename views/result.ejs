@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Analysis Result</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body class="dark">
+
+<header class="nav">
+  <div class="logo">SWBS</div>
+  <a class="btn-outline" href="/entry">Re-Assess</a>
+</header>
+
+<section class="result">
+  <div class="result-card">
+
+    <span class="pill">Assessment Result</span>
+
+    <h2>
+      Your <span class="gold">Workload Analysis</span>
+    </h2>
+
+    <div class="score-box">
+      <div class="score">
+        <span>Workload Score</span>
+        <strong><%= workload_score %></strong>
+      </div>
+
+      <div class="badge <%= burnout_level.toLowerCase() %>">
+        <%= burnout_level %> BURNOUT
+      </div>
+    </div>
+
+    <p class="result-text">
+      <% if (burnout_level === "LOW") { %>
+        Your academic workload is balanced. Keep maintaining healthy study and sleep habits.
+      <% } else if (burnout_level === "MEDIUM") { %>
+        Your workload is moderate. Consider improving rest and task planning.
+      <% } else { %>
+        High burnout risk detected. Immediate changes in workload and sleep are recommended.
+      <% } %>
+    </p>
+
+    <a href="/entry" class="btn-gold full-btn">
+      Re-Analyze →
+    </a>
+
+  </div>
+</section>
+
+<footer>
+  © 2026 Student Workload & Burnout Analysis System
+</footer>
+
+</body>
+</html>

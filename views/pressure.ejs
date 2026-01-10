@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Academic Pressure</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body class="dark">
+
+<header class="nav">
+  <div class="logo">SWBS</div>
+</header>
+
+<section class="assessment">
+  <div class="assessment-card">
+    <span class="pill">Section 3</span>
+
+    <h2>How intense has academic pressure felt recently?</h2>
+    <p class="subtitle">Drag the slider to what feels right.</p>
+
+    <form method="POST" action="/pressure">
+      <input
+        type="range"
+        name="pressure"
+        min="0"
+        max="100"
+        value="30"
+        class="slider"
+      >
+
+      <div class="slider-labels">
+        <span>Low</span>
+        <span>Moderate</span>
+        <span>High</span>
+      </div>
+
+      <button type="submit" class="btn-gold full-btn">
+        Continue →
+      </button>
+    </form>
+  </div>
+</section>
+
+<footer>© 2026 Student Workload & Burnout Analysis System</footer>
+</body>
+</html>

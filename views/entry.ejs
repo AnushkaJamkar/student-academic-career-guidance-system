@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Academic Assessment</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body class="dark">
+
+<header class="nav">
+  <div class="logo">SWBS</div>
+</header>
+
+<section class="assessment">
+  <div class="assessment-card">
+    <span class="pill">Assessment</span>
+
+    <h2>Academic Workload Analysis</h2>
+    <p class="subtitle">
+      Answer honestly to get meaningful insights.
+    </p>
+
+    <form method="POST" action="/submit">
+
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Study Hours</label>
+          <input type="number" name="study_hours" required>
+        </div>
+
+        <div class="form-group">
+          <label>Sleep Hours</label>
+          <input type="number" name="sleep_hours" required>
+        </div>
+
+        <div class="form-group">
+          <label>Assignments Count</label>
+          <input type="number" name="assignments" required>
+        </div>
+
+        <div class="form-group">
+          <label>Stress Level (1–5)</label>
+          <input type="number" min="1" max="5" name="stress_level" required>
+        </div>
+
+        <div class="form-group full">
+          <label>Week</label>
+          <input type="text" name="week" placeholder="Week 1" required>
+        </div>
+
+      </div>
+
+      <button type="submit" class="btn-gold full-btn">
+        Analyze →
+      </button>
+
+    </form>
+  </div>
+</section>
+
+<footer>
+  © 2026 Student Workload & Burnout Analysis System
+</footer>
+
+</body>
+</html>

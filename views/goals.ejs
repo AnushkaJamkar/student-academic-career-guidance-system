@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Goals</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body class="dark">
+
+<header class="nav">
+  <div class="logo">SWBS</div>
+</header>
+
+<section class="assessment">
+  <div class="assessment-card">
+    <span class="pill">Section 4</span>
+
+    <h2>What do you want to improve?</h2>
+    <p class="subtitle">Choose what matters most to you.</p>
+
+    <form method="POST" action="/goals">
+
+      <h3 class="gold">Academic Goal</h3>
+      <div class="option-grid">
+        <label class="option">
+          <input type="radio" name="academic" value="consistency" required>
+          <span>Improve consistency</span>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="academic" value="performance">
+          <span>Improve performance</span>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="academic" value="placements">
+          <span>Prepare for placements</span>
+        </label>
+      </div>
+
+      <h3 class="gold" style="margin-top:30px;">Health Goal</h3>
+      <div class="option-grid">
+        <label class="option">
+          <input type="radio" name="health" value="sleep" required>
+          <span>Better sleep routine</span>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="health" value="stress">
+          <span>Reduce stress</span>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="health" value="balance">
+          <span>Balanced routine</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-gold full-btn">
+        Create My Roadmap →
+      </button>
+    </form>
+  </div>
+</section>
+
+<footer>© 2026 Student Workload & Burnout Analysis System</footer>
+</body>
+</html>

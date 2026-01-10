@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Study Pressure</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body class="dark">
+
+<header class="nav">
+  <div class="logo">SACGS</div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/study">Academic Assessment</a>
+    <a href="/career">Career Path Analyzer</a>
+  </nav>
+</header>
+
+<section class="assessment">
+  <div class="assessment-card">
+    <span class="pill">Section 1</span>
+
+    <h2>Academic Self-Assessment</h2>
+    <p class="subtitle">
+      Step 1: Identify your study pattern
+    </p>
+
+    <form method="POST" action="/study">
+
+      <div class="option-grid">
+        <label class="option">
+          <input type="radio" name="pressure" value="1" required>
+          <span>😌 Manageable</span>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="pressure" value="2">
+          <span>😐 Slightly Heavy</span>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="pressure" value="3">
+          <span>😓 Often Overwhelming</span>
+        </label>
+
+        <label class="option">
+          <input type="radio" name="pressure" value="4">
+          <span>😵 Mentally Exhausting</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-gold full-btn">
+        Continue →
+      </button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  © 2026 Student Academic & Career Guidance System
+</footer>
+
+</body>
+</html>
