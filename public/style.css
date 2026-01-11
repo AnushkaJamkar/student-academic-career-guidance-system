@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600&display=swap'); 
 
 :root {
   --gold: #d4af37;
@@ -6,6 +7,12 @@
   --dark: #0b0b0b;
   --muted: #9ca3af;
 }
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  background: #000;
+}
+
 
 * {
   box-sizing: border-box;
@@ -398,6 +405,47 @@ footer {
     font-size: 24px;
   }
 }
+@media (max-width: 768px) {
+  .hero,
+  .landing,
+  .home {
+    padding: 40px 16px;
+    overflow-x: hidden;
+  }
+
+  .hero h1,
+  .hero h2 {
+    font-size: 2rem;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 768px) {
+  .assessment-card,
+  .result-card {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-group,
+  .action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-gold {
+    position: static;
+  }
+}
 
 /* Small phones */
 @media (max-width: 480px) {
@@ -425,4 +473,344 @@ footer {
 .option.disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+/* ===== MOBILE ONLY FIXES (DO NOT TOUCH DESKTOP) ===== */
+@media screen and (max-width: 480px) {
+
+  /* cards fit phone width */
+  .assessment-card,
+  .result-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  /* hero text scaling */
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.25;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  /* form fields stack */
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* options go single column */
+  .option-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* checkbox readability */
+  .checkbox-list label {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.4;
+  }
+
+  /* navbar stays readable */
+  .nav {
+    padding: 14px 16px;
+  }
+
+  .nav nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  /* buttons full width */
+  .btn-gold {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* ===============================
+   MOBILE FIXES – SAFE OVERRIDES
+   =============================== */
+@media (max-width: 768px) {
+
+  /* ---- NAVBAR FIX ---- */
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .nav nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ---- HERO FIX ---- */
+  .hero h1 {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn-gold,
+  .btn-ghost {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }
+
+  /* ---- CARDS FIX ---- */
+  .assessment-card,
+  .result-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 24px;
+    margin: 0 auto;
+  }
+
+  /* ---- OPTION GRID FIX ---- */
+  .option-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* ---- CHECKBOX FIX (THIS WAS A BIG ISSUE) ---- */
+  .checkbox-list label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .checkbox-list input {
+    margin-top: 4px;
+  }
+
+  /* ---- SECTION SPACING FIX ---- */
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* ---- FOOTER FIX ---- */
+  footer {
+    font-size: 12px;
+    padding: 16px;
+  }
+}
+
+/* SMALL PHONES ONLY */
+@media (max-width: 480px) {
+
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .assessment-card h2,
+  .result-card h2 {
+    font-size: 22px;
+  }
+}
+/* ======================================
+   FINAL MOBILE PATCH – NO DESKTOP DAMAGE
+   ====================================== */
+@media (max-width: 768px) {
+
+  /* ---- GLOBAL RESET ---- */
+  * {
+    max-width: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  /* ---- NAVBAR (VERTICAL BUT CLEAN) ---- */
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 12px;
+  }
+
+  .nav nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .nav nav a {
+    font-size: 15px;
+    padding: 6px 0;
+  }
+
+  /* ---- HERO FIX (NO OVERLAP) ---- */
+  .hero {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.25;
+  }
+
+  .hero p {
+    font-size: 14px;
+    padding: 0 8px;
+  }
+
+  /* ---- BUTTON GROUP FIX (THIS WAS CAUSING OVERLAP) ---- */
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    margin-top: 24px;
+  }
+
+  .btn-gold,
+  .btn-ghost {
+    width: 100%;
+    max-width: 320px;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* ---- CARDS FIX ---- */
+  .assessment,
+  .result {
+    padding: 40px 12px;
+  }
+
+  .assessment-card,
+  .result-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 24px 18px;
+    margin: 0 auto;
+  }
+
+  /* ---- OPTION GRID FIX ---- */
+  .option-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* ---- CHECKBOX FIX (NO INLINE CRASH) ---- */
+  .checkbox-list label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .checkbox-list input {
+    margin-top: 4px;
+  }
+
+  /* ---- SECTION SPACING (PREVENT STACKING COLLISION) ---- */
+  section {
+    margin-bottom: 40px;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    font-size: 12px;
+    padding: 16px;
+  }
+}
+
+/* SMALL PHONES */
+@media (max-width: 480px) {
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .assessment-card h2,
+  .result-card h2 {
+    font-size: 22px;
+  }
+}
+/* ================= MOBILE ONLY (CLEAN & SAFE) ================= */
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  .nav {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .nav nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* HERO */
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.25;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  /* CARDS */
+  .assessment-card,
+  .result-card {
+    width: 100%;
+    padding: 22px;
+  }
+
+  /* BUTTON GROUP — THIS FIXES OVERLAP */
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 24px;
+    align-items: center;
+  }
+
+  .actions a {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+  }
+
+  /* CHECKBOXES */
+  .checkbox-list label {
+    display: flex;
+    gap: 10px;
+    line-height: 1.4;
+  }
+
+  footer {
+    font-size: 12px;
+    padding: 16px;
+  }
 }
