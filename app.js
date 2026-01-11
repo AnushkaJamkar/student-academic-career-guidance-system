@@ -1,64 +1,57 @@
 const express = require("express");
-const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
+const Database = require("better-sqlite3");
 
 const app = express();
 
-// Middleware
+/* ---------- MIDDLEWARE ---------- */
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// View engine
+/* ---------- VIEW ENGINE ---------- */
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Database connection
+/* ---------- DATABASE ---------- */
 const dbPath = path.join(__dirname, "database", "workload.db");
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.log("DB error:", err.message);
-  } else {
-    console.log("Connected to SQLite database");
-  }
-});
+const db = new Database(dbPath);
+console.log("Connected to SQLite database");
 
-// Create tables
-db.serialize(() => {
-  db.run(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      email TEXT,
-      password TEXT
-    )
-  `);
+/* ---------- TABLES ---------- */
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    email TEXT,
+    password TEXT
+  )
+`).run();
 
-  db.run(`
-    CREATE TABLE IF NOT EXISTS weekly_data (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      user_id INTEGER,
-      study_hours INTEGER,
-      sleep_hours INTEGER,
-      assignments INTEGER,
-      stress_level INTEGER,
-      week TEXT
-    )
-  `);
-});
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS weekly_data (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    study_hours INTEGER,
+    sleep_hours INTEGER,
+    assignments INTEGER,
+    stress_level INTEGER,
+    week TEXT
+  )
+`).run();
 
 /* ---------- ROUTES ---------- */
 
-// Landing Page (Gold Hero UI)
+/* Home */
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-// Entry Form
+/* Redirect old entry */
 app.get("/entry", (req, res) => {
-  res.render("entry");
+  res.redirect("/study");
 });
 
-// Form Submit + Logic
+/* ---------- OLD WORKLOAD FORM (OPTIONAL) ---------- */
 app.post("/submit", (req, res) => {
   const { study_hours, sleep_hours, assignments, stress_level, week } = req.body;
 
@@ -75,31 +68,21 @@ app.post("/submit", (req, res) => {
     burnout_level = "MEDIUM";
   }
 
-  const query = `
+  db.prepare(`
     INSERT INTO weekly_data
     (user_id, study_hours, sleep_hours, assignments, stress_level, week)
     VALUES (?, ?, ?, ?, ?, ?)
-  `;
+  `).run(1, study_hours, sleep_hours, assignments, stress_level, week);
 
-  db.run(
-    query,
-    [1, study_hours, sleep_hours, assignments, stress_level, week],
-    (err) => {
-      if (err) {
-        console.log(err);
-        return res.send("Error saving data");
-      }
-
-      res.render("result", {
-        workload_score,
-        burnout_level
-      });
-    }
-  );
+  res.render("result", {
+    workload_score,
+    burnout_level
+  });
 });
 
+/* ---------- ACADEMIC ASSESSMENT ---------- */
 
-// Study Pressure Page
+/* Study Pattern */
 app.get("/study", (req, res) => {
   res.render("study");
 });
@@ -112,18 +95,19 @@ app.post("/study", (req, res) => {
 
   if (pressure === 2) {
     level = "Moderate";
-    message = "Your workload feels slightly heavy but still manageable with structure.";
+    message = "Your workload feels slightly heavy but manageable with structure.";
   } else if (pressure === 3) {
     level = "High";
-    message = "You often feel overwhelmed by studies. This indicates rising pressure.";
+    message = "You often feel overwhelmed by studies.";
   } else if (pressure === 4) {
     level = "Very High";
-    message = "Your workload feels mentally exhausting and may lead to burnout.";
+    message = "Your workload feels mentally exhausting.";
   }
 
   res.render("study-result", { level, message });
 });
-// Time Management
+
+/* Time Management */
 app.get("/time", (req, res) => {
   res.render("time");
 });
@@ -135,21 +119,21 @@ app.post("/time", (req, res) => {
   const score = habits.length;
 
   let level = "Good";
-  let message = "You manage your time fairly well with minor inconsistencies.";
+  let message = "You manage your time fairly well.";
 
   if (score >= 3) {
     level = "Unstable";
-    message = "Your time management lacks structure and causes unnecessary stress.";
+    message = "Your time management lacks structure.";
   }
-
   if (score >= 4) {
     level = "Chaotic";
-    message = "Poor time structure is heavily impacting your productivity.";
+    message = "Poor time structure is affecting productivity.";
   }
 
   res.render("time-result", { level, message });
 });
-// Academic Pressure
+
+/* Academic Pressure */
 app.get("/pressure", (req, res) => {
   res.render("pressure");
 });
@@ -158,28 +142,24 @@ app.post("/pressure", (req, res) => {
   const value = Number(req.body.pressure);
 
   let level = "Low";
-  let message = "Academic pressure feels manageable at the moment.";
+  let message = "Academic pressure feels manageable.";
 
   if (value >= 40 && value < 70) {
     level = "Moderate";
-    message = "Academic pressure is noticeable and may affect focus.";
+    message = "Academic pressure is noticeable.";
   }
-
   if (value >= 70) {
     level = "High";
-    message = "High academic pressure detected. This may impact mental well-being.";
+    message = "High academic pressure detected.";
   }
 
   res.render("pressure-result", { level, message });
 });
-// Goals
+
+/* Goals & Roadmap */
 app.get("/goals", (req, res) => {
   res.render("goals");
 });
-app.get("/entry", (req, res) => {
-  res.redirect("/study");
-});
-
 
 app.post("/goals", (req, res) => {
   const { academic, health } = req.body;
@@ -188,56 +168,54 @@ app.post("/goals", (req, res) => {
   let healthPlan = [];
   let weeklyRule = "";
 
-  // Academic plans
   if (academic === "consistency") {
     academicPlan = [
-      "Study in fixed daily slots instead of long irregular sessions",
-      "Limit daily academic goals to 3 priority tasks",
-      "Avoid last-minute study marathons"
+      "Study in fixed daily slots",
+      "Limit tasks to 3 priorities",
+      "Avoid last-minute cramming"
     ];
-    weeklyRule = "Review progress every Sunday and reset weekly goals.";
+    weeklyRule = "Weekly progress review every Sunday.";
   }
 
   if (academic === "performance") {
     academicPlan = [
-      "Identify weak subjects and revise them first",
-      "Use active recall instead of rereading notes",
-      "Solve at least 5 practice questions daily"
+      "Focus on weak subjects",
+      "Use active recall",
+      "Practice daily problems"
     ];
-    weeklyRule = "Test yourself weekly instead of waiting for exams.";
+    weeklyRule = "Weekly self-test.";
   }
 
   if (academic === "placements") {
     academicPlan = [
-      "Allocate 1 hour daily for skills or interview prep",
-      "Build one small project or concept every week",
-      "Track progress instead of comparing with peers"
+      "Daily 1-hour skill prep",
+      "Weekly mini-project",
+      "Track skill progress"
     ];
-    weeklyRule = "Every week, improve one employability skill.";
+    weeklyRule = "Improve one employability skill weekly.";
   }
 
-  // Health plans
   if (health === "sleep") {
     healthPlan = [
-      "Set a fixed sleep and wake-up time",
-      "Avoid studying late at night",
-      "Sleep is treated as non-negotiable"
+      "Fixed sleep schedule",
+      "No late-night study",
+      "Sleep is non-negotiable"
     ];
   }
 
   if (health === "stress") {
     healthPlan = [
-      "Break large tasks into smaller chunks",
-      "Take short guilt-free breaks",
-      "Stress indicates overload, not laziness"
+      "Break tasks into chunks",
+      "Short guilt-free breaks",
+      "Stress = overload, not laziness"
     ];
   }
 
   if (health === "balance") {
     healthPlan = [
-      "Balance academics with at least one daily non-study activity",
+      "Daily non-study activity",
       "Avoid continuous screen time",
-      "Consistency matters more than intensity"
+      "Consistency over intensity"
     ];
   }
 
@@ -247,17 +225,19 @@ app.post("/goals", (req, res) => {
     weeklyRule
   });
 });
-// Career Path Analyzer
+
+/* ---------- CAREER MODULE ---------- */
+
 app.get("/career", (req, res) => {
   res.render("career");
 });
-// Tech Career Roadmap
+
 app.get("/career/tech", (req, res) => {
   res.render("tech-roadmap");
 });
 
+/* ---------- SERVER ---------- */
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
